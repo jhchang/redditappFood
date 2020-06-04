@@ -25,7 +25,6 @@ function fetchWebpage() {
         
         try {
           iurl = post.data.preview.images[0].resolutions[post.data.preview.images[0].resolutions.length-1].url;
-          console.log(post.data.preview.images[0].resolutions.length-1);
         } catch (err) {
           return;
         }
@@ -60,7 +59,7 @@ function fetchWebpage() {
         }*/
       })
     });
-    repeat = setTimeout(fetchWebpage, 4*1000);
+    repeat = setTimeout(fetchWebpage, 10*1000);
 }
 
 function addNewImage(postObject) {
