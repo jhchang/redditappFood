@@ -6,7 +6,7 @@ TODO :
 */
 
 //First we create the variables
-let request_URL = "https://www.reddit.com/r/Food.json"; //the subreddit json data.
+let request_URL = "https://www.reddit.com/r/food.json"; //the subreddit json data.
 
 //Cache the ul element to store new elements in it
 const imageList = document.querySelector('ul');
@@ -24,9 +24,10 @@ function fetchWebpage() {
       posts.data.children.forEach(post => {
         
         try {
-          iurl = post.data.preview.images[0].resolutions[3].url
+          iurl = post.data.preview.images[0].resolutions[post.data.preview.images[0].resolutions.length-1].url;
+          console.log(post.data.preview.images[0].resolutions.length-1);
         } catch (err) {
-          return
+          return;
         }
 
         //Defining 'PostObject'
@@ -40,8 +41,8 @@ function fetchWebpage() {
         //Adding a new element to the UL html element.
         var tmpId = search(postObject.imgurl, metaDataCache)
         if (tmpId >= 0) {
-          var node = document.getElementById(tmpId).children;
-          console.log(node.text);
+          var node = document.getElementById(tmpId).children[2];
+          node.innerHTML = "🔼"+postObject.upvotes;
         } else {
           imageList.innerHTML += addNewImage(postObject);
           metaDataCache.push({url:postObject.imgurl, id:htmlId});
@@ -57,10 +58,9 @@ function fetchWebpage() {
           metaDataCache.push({url:postObject.imgurl, id:htmlId});
           htmlId++;
         }*/
-        console.log("refreshing images");
       })
     });
-    repeat = setTimeout(fetchWebpage, 4000);
+    repeat = setTimeout(fetchWebpage, 4*1000);
 }
 
 function addNewImage(postObject) {
